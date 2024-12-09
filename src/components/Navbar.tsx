@@ -50,13 +50,13 @@ function Navbar() {
                     (<div className="navMenus top-0 left-0 absolute block h-screen w-screen bg-[#F5F5F5] text-2xl">
                         <i onClick={closeMenu} className='bx bx-x ml-4 absolute top-4 right-6 text-4xl'></i>
                         <ul className='block font-medium gap-5 ml-4 mt-16'>
-                            <li className='mb-6'><Link href="/" className="border-b border-gray-200 ">Home</Link></li>
-                            <li className='mb-6'><Link href="./featured" className="border-b border-gray-200">Explore</Link></li>
-                            <li className='mb-6'><Link href="./mens" className="border-b border-gray-200">Add to Cart</Link></li>
-                            <li className='mb-6'><Link href="./signin" className="border-b border-gray-200">Sign In</Link></li>
-                            <li className='mb-6'><Link href="./member" className="border-b border-gray-200 ">Join us</Link></li>
-                            <li className='mb-6'><Link href="./payments" className="border-b border-gray-200">Contact</Link></li>
-                            <li className='mb-6'><Link href="./checkout" className="border-b border-gray-200">Checkout</Link></li>
+                            <li onClick={closeMenu} className='mb-6'><Link href="/" className="border-b border-gray-200 ">Home</Link></li>
+                            <li onClick={closeMenu} className='mb-6'><Link href="./featured" className="border-b border-gray-200">Explore</Link></li>
+                            <li onClick={closeMenu} className='mb-6'><Link href="./mens" className="border-b border-gray-200">Add to Cart</Link></li>
+                            <li onClick={closeMenu} className='mb-6'><Link href="./signin" className="border-b border-gray-200">Sign In</Link></li>
+                            <li onClick={closeMenu} className='mb-6'><Link href="./member" className="border-b border-gray-200 ">Join us</Link></li>
+                            <li onClick={closeMenu} className='mb-6'><Link href="./payments" className="border-b border-gray-200">Contact</Link></li>
+                            <li onClick={closeMenu} className='mb-6'><Link href="./checkout" className="border-b border-gray-200">Checkout</Link></li>
                         </ul>
                     </div>)
                 }
