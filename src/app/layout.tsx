@@ -4,7 +4,10 @@ import TopNavbar from "@/components/TopNavbar";
 import 'boxicons/css/boxicons.min.css';
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-
+import Provider from "@/components/Provider";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ClerkProvider } from '@clerk/nextjs'
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,15 +20,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`xs:bg-white xs:text-black overflow-x-hidden antialiased`}
-      >
-        <TopNavbar />
-        <Navbar />
-        {children}
-        <Footer/>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`xs:bg-white xs:text-black overflow-x-hidden antialiased`}
+        >
+          
+          <Provider>
+            <TopNavbar />
+            <Navbar />
+            {children}
+            <Footer />
+            <ToastContainer />
+          </Provider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

@@ -22,7 +22,7 @@ const Menu = () => {
   };
 
   return (
-    <aside className="w-full p-4 space-y-6 border-r lg:max-w-max">
+    <aside className="w-full p-4 space-y-6 border-r lg:w-[100vw]">
       {/* Categories */}
       <div className="border-b border-gray-100 pb-5">
         <ul className="mt-2 space-y-2 text-[17px]">

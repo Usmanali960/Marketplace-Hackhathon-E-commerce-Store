@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
+import mainImage from "@/app/assets/Image (1).png"
 
 function ImageComponent() {
     return (
@@ -8,7 +9,7 @@ function ImageComponent() {
             {/* Background Image */}
             <div className="relative">
                 <Image
-                    src="/image (2).png"
+                    src={mainImage}
                     alt="Nike Air Max Pulse"
                     className="w-screen h-full object-cover"
                     width={300}

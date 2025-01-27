@@ -1,24 +1,32 @@
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
+import Link from 'next/link';
 import React from 'react';
+import image11 from "@/app/assets/Image (11).png";
+import image12 from "@/app/assets/Image (12).png";
+import image13 from "@/app/assets/Image (13).png"
 
 type ImagesType = {
-  image: string;
+  image: StaticImageData;
   category: string;
+  route: string
 };
 
 const CategoriesImages: React.FC = () => {
   const images: ImagesType[] = [
     {
-      image: '/image (11).png',
+      image: image11,
       category: "Men's",
+      route: "/mens"
     },
     {
-      image: '/image (12).png',
+      image: image12,
       category: "Women's",
+      route: "/womens"
     },
     {
-      image: '/image (13).png',
-      category: "Kids's",
+      image: image13,
+      category: "Shirts",
+      route: "./mensShirt"
     },
   ];
 
@@ -39,12 +47,14 @@ const CategoriesImages: React.FC = () => {
             />
             {/* Category Button */}
             <div className="absolute bottom-10 left-16 bg-white text-black rounded-full px-4 py-2 border border-gray-200 shadow-md">
+              <Link href={image.route}>
               <button
                 className="font-medium hover:text-gray-700 transition-colors"
                 aria-label={`View ${image.category} category`}
               >
                 {image.category}
               </button>
+              </Link>
             </div>
           </div>
         ))}

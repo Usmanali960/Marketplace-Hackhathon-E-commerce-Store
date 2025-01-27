@@ -1,35 +1,93 @@
-import Image from 'next/image'
-import React from 'react'
+"use client"
+import { productsTypes } from '@/app/types/product';
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
+import eye from "@/app/assets/eye.png";
+import Link from 'next/link';
+import { client } from '@/sanity/lib/client';
+import WishListButton from '@/components/WishListButton';
 
-function Page() {
+const MensShoes = () => {
+    const [data, setData] = useState<productsTypes[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const query = `*[_type == "product" && category == "Men's Shoes"]{
+                    description,
+                    inventory,
+                    colors[0],
+                    price,
+                    _id,
+                    "imageUrl":image.asset->url,
+                    status,
+                    productName,
+                    category,
+                    "slug":slug.current
+                }`;
+                const data = await client.fetch(query);
+                setData(data);
+                setLoading(false);
+            } catch (error) {
+                console.error(`Error fetching products for Men's Shoes:`, error);
+                setLoading(false);
+            }
+        };
+        fetchProducts();
+    }, []);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
-        <div className='flex items-center gap-10 lg:flex-row flex-col lg:py-20 py-10 justify-between lg:px-10 px-5'>
-            <div className="left">
-                <Image
-                    src="/Rectangle (30).png"
-                    className='w-full h-auto lg:w-[653px] lg:h-[653px] object-cover'
-                    alt='product detail'
-                    height={653}
-                    width={653}
-                />
-            </div>
-            <div className="right lg:text-left text-center lg:w-[40vw]">
-                <h1 className='font-medium leading-10 xs:text-[34px] sm:text-[48px] w-full mb-4'>
-                    Nike Air Force 1 PLT.AF.ORM
-                </h1>
-                <p className='sm:text-[15px] xs:text-[13px] w-full lg:w-[374px] mb-6'>
-                    Turn style on its head with this crafted take on the Air Jordan 1 Mid. Its inside-out inspired construction,
-                    including unique layering and exposed foam accents, ups the ante on this timeless Jordan Brand silhouette.
-                    Details like the deco stitching on the Swoosh add coveted appeal, while the unexpected shading, rich mixture of materials
-                    and aged midsole aesthetic give this release an artisan finish.
-                </p>
-                <p className='text-[36px] font-medium mt-10 mb-4 '>₹ 8 695.00</p>
-                <button className='flex px-4 xs:mx-auto lg:mx-0 justify-center py-3 rounded-full gap-2 items-center bg-black text-white mt-2'>
-                    <i className='bx text-3xl bx-cart-alt'></i> Add To Cart
-                </button>
+        <div>
+            <div className="flex gap-5 overflow-x-auto px-2">
+                {data.map((product) => (
+                    <div key={product._id} className="card bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 w-[280px] flex-shrink-0">
+                        {/* Product Image */}
+                        <div className="relative w-full aspect-square">
+                            <Image
+                                src={product.imageUrl || '/placeholder-image.jpg'}
+                                alt={product.productName || 'Product Image'}
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 300px"
+                                className="object-cover"
+                            />
+                            <div className="flex items-center gap-y-2 justify-center flex-col absolute top-2 right-2 cursor-pointer p-1 rounded-full">
+                                <Link href={`product/${product.slug}`} className='bg-white p-2 rounded-full'>
+                                    <Image className='group' src={eye} alt="Details image" width={18} height={19} />
+                                </Link>
+                                <p className="absolute top-full mt-1 left-1/2 -translate-x-1/2 text-xs text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    details
+                                </p>
+                                <div>
+                                    <WishListButton product={product} />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Product Details */}
+                        <div className="detail flex flex-col p-4">
+                            <p className='truncate text-[#9E3500] font-semibold text-sm'>{product.status}</p>
+                            <div className="productDetail flex items-center justify-between">
+                                <p className="truncate font-semibold text-sm">
+                                    {product.productName || 'Unnamed Product'}
+                                </p>
+                                <p className="text-xs text-gray-700">
+                                    {product.price ? `Rs.${product.price.toFixed(2)}` : 'Price Not Available'}
+                                </p>
+                            </div>
+                            <p className="text-xs text-gray-500 mt-1">
+                                {product.category || 'Uncategorized'}
+                            </p>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Page
+export default MensShoes;

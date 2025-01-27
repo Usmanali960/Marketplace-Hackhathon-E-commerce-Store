@@ -1,36 +1,36 @@
+"use client";
 import React from 'react';
-import { Products } from '@/data/ProductData';
-import ProductCard from './ProductCard';
 import ImageComponent from './ImageComponent';
-import GearUpProducts from './GearUpProducts';
+import MensShoes from '@/app/mens/page';
+import WomensShoes from '@/app/womens/page';
+import WomensShirts from '@/app/womensShirt/page';
+import MensShirts from '@/app/mensShirt/page';
 
 function ProductList() {
     return (
         <section>
-            <h1 className="font-medium mb-6 text-center sm:text-left">Best of Air Max</h1>
-            
-            {/* Home Products List */}
+            <h1 className="font-medium mb-6 text-center sm:text-left">Mens Shoes</h1>
             <div className="overflow-x-auto scroll-smooth">
                 <div className="flex gap-5">
-                    {Products.HomeProducts.map((product) => (
-                        <ProductCard key={product.id} product={product} />
-                    ))}
+                    <MensShoes />
                 </div>
             </div>
 
             <ImageComponent />
 
-            <h1 className="font-medium mb-6 text-center sm:text-left">Best of Gear Up</h1>
+            <h1 className="font-medium mb-6 text-center sm:text-left">Womens Shoes</h1>
+            <div className="flex overflow-x-auto space-x-4 py-4 px-2 lg:px-4">
+                <WomensShoes />
+            </div>
 
-            {/* Gear Up Products List */}
-            <div className="overflow-x-auto scrollbar-hidden">
-                <div className="flex py-5 gap-5">
-                    {Products.GearUpProoducts.map((product) => (
-                        <div key={product.id} className="w-[250px] sm:w-[300px] lg:w-[350px] flex-shrink-0">
-                            <GearUpProducts product={product} />
-                        </div>
-                    ))}
-                </div>
+            <h1 className="font-medium mb-6 text-center sm:text-left">Mens Shirt</h1>
+            <div className="flex overflow-x-auto space-x-4 py-4 px-2 lg:px-4">
+                <MensShirts />
+            </div>
+
+            <h1 className="font-medium mb-6 text-center sm:text-left">Womens Shirt</h1>
+            <div className="flex overflow-x-auto space-x-4 py-4 px-2 lg:px-4">
+                <WomensShirts />
             </div>
         </section>
     );

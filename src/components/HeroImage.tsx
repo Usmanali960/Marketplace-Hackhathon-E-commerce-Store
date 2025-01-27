@@ -1,12 +1,13 @@
 import React from 'react'
 import Image from 'next/image'
+import heroImage from "@/app/assets/Image (10).png"
 
 function HeroImage() {
   return (
     <div>
 
       <div className='mt-10'>
-        <Image src="/image (10).png" alt='hero image' className='lg:w-[1344] h-[700] ' width={1344} height={700} />
+        <Image src={heroImage} alt='hero image' className='lg:w-[1344] h-[300] ' width={1344} height={300} />
       </div>
       <div className="text-center py-8 px-4">
         <h1 className="text-3xl md:text-5xl font-bold w-full">

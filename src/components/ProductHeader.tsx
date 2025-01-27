@@ -1,11 +1,11 @@
 import React from 'react';
 import LeftMenu from './LeftMenu';
-import OtherProductList from './OtherProducList';
+import OtherProductCard from './OtherProductCard';
 
 function ProductHeader() {
     return (
         <section>
-            <div className="flex items-center justify-between px-5">
+            <div className="flex items-center overflow-x-auto overflow-y-auto justify-between px-5">
                 <div>New (500)</div>
                 <div className="flex items-center gap-3">
                     <div className="filter flex items-center gap-2">
@@ -19,9 +19,9 @@ function ProductHeader() {
                 </div>
             </div>
 
-            <div className="flex flex-col lg:flex-row sm:flex-col md:flex-col">
+            <div className="flex flex-col overflow-x-auto lg:flex-row sm:flex-col md:flex-col">
                 <LeftMenu />
-                <OtherProductList />
+                <OtherProductCard />
             </div>
 
             <div className="lg:ml-64 ml-5 mt-5 lg:mt-10 border-t border-gray-100">

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import image from "@/app/assets/Image.png"
 
 const HeroSection: React.FC = () => {
   return (
@@ -7,7 +8,7 @@ const HeroSection: React.FC = () => {
       {/* Background Image */}
       <div className="relative">
         <Image
-          src="/image.png"
+          src={image}
           alt="Nike Air Max Pulse"
           className="w-screen h-full object-cover"
           width={300}

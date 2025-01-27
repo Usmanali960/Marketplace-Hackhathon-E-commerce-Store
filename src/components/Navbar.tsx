@@ -1,67 +1,88 @@
-"use client"
+"use client";
 import Link from 'next/link'
 import React, { useState } from 'react'
 import 'boxicons/css/boxicons.min.css';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/redux/store';
+import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet'; // Import the Sheet components
+import Search from './Search';
+import Authentication from './Authentication';
+import nike from "@/app/assets/nike.jpg"
 
 function Navbar() {
-    const [mobileMenu, setMobileMenu] = useState(false)
+    const [menu, setMenu] = useState(true)
+    const cartItems = useSelector((state: RootState) => state.cart.items)
+    const wishlistItems = useSelector((state: RootState) => state.wishlist.items);
 
-
-    const handleTheMenu = () => {
-        setMobileMenu(!mobileMenu)
-    }
-
-    function closeMenu() {
-        setMobileMenu(false);
+    const menuHandler = () => {
+        setMenu(false)
     }
 
     return (
-        <div className='w-screen sticky top-0 left-0 flex z-50 bg-white border-gray-300'>
-            <div>
-                <nav className='flex items-center w-screen md:px-20 xs:px-5 h-[12vh] justify-between'>
-                    <div className="logo">
-                        <Image src="/Vector (1).png" alt='logo' width={52} height={25} />
-                    </div>
-                    <div className="navMenus flex items-center gap-5 xs:hidden md:flex">
-                        <ul className='flex font-medium items-center gap-5'>
-                            <li><Link href="/" className="">Home</Link></li>
-                            <li><Link href="./featured" className="">Explore</Link></li>
-                            <li><Link href="./mens" className="">Add to Cart</Link></li>
-                            <li><Link href="./signin" className="">Sign In</Link></li>
-                            <li><Link href="./member" className="">Join us</Link></li>
-                            <li><Link href="./payments" className="">Contact</Link></li>
-                            <li><Link href="./checkout" className="">Checkout</Link></li>
-                        </ul>
-                    </div>
-                    <div className="extra relative flex items-center gap-3 text-3xl">
-                        <div className="search xs:hidden md:flex bg-gray-100 text-xl px-4 py-2 justify-center flex items-center rounded-full">
-                            <i className='bx bx-search text-2xl'></i>
-                            <input type="text" className='outline-none bg-gray-100 placeholder:text-black/40 placeholder:text-base' placeholder='Search...' />
+        <>
+            <div className='w-screen sticky top-0 left-0 flex z-50 bg-white border-gray-300'>
+                <div>
+                    <nav className='flex items-center w-screen md:px-20 xs:px-5 h-[12vh] justify-between'>
+                        <Link href={"/"}>
+                            <Image src={nike} alt='logo' width={100} height={35} />
+                        </Link>
+                        <div className="navMenus flex items-center gap-5 xs:hidden md:flex">
+                            <ul className='flex font-medium items-center gap-5'>
+                                <li><Link href="/" className="">Home</Link></li>
+                                <li><Link href="./featured" className="">Products</Link></li>
+                                <li><Link href="./payments" className="">Contact</Link></li>
+                            </ul>
                         </div>
-                        <i className='bx bx-heart'></i>
-                        <Link href="/cart"><i className='bx bx-cart-alt'></i></Link>
-                        <div className="hamberger md:hidden xs:flex">
-                            <i onClick={handleTheMenu} className='bx bx-menu'></i>
+                        <div className="extra relative flex items-center gap-3 text-3xl">
+                            <div className='sm:flex hidden'>
+                                <Search />
+                            </div>
+                            <Link href="/wishList" className="flex relative items-center justify-center">
+                                {wishlistItems.length > 0 && (
+                                    <p className='absolute bg-red-600 text-base text-white rounded-full -right-2.5 -top-2 px-1.5'>{wishlistItems.length}</p>
+                                )}
+                                <i className='bx bx-heart'></i>
+                            </Link>
+                            <Link href="/cart" className='flex relative items-center justify-center'>
+                                {cartItems.length > 0 && (
+                                    <p className='absolute bg-red-600 text-base text-white rounded-full -right-2.5 -top-2 px-1.5'>{cartItems.length}</p>
+                                )}
+                                <i className='bx bx-cart-alt'></i>
+                            </Link>
+                            <div className='flex items-center justify-center -mt-1.3'>
+
+                            <Authentication />
+                            </div>
+
+                            {/* Sheet Trigger for Mobile Menu */}
+                            <div className='xs:flex sm:hidden'>
+                                <Sheet>
+                                    <SheetTrigger>
+                                        <i className='bx bx-menu text-2xl sm:hidden xs:flex'></i>
+                                    </SheetTrigger>
+                                    <SheetContent>
+                                        <SheetHeader>
+                                            <SheetTitle>Menu</SheetTitle>
+                                            <SheetDescription></SheetDescription>
+                                        </SheetHeader>
+                                        <ul className='block font-medium gap-5 ml-4'>
+                                            <li><Link onClick={menuHandler} href="/" className="border-b border-gray-200 ">Home</Link></li>
+                                            <li><Link onClick={menuHandler} href="./featured" className="border-b border-gray-200">Products</Link></li>
+                                            <li><Link onClick={menuHandler} href="./payments" className="border-b border-gray-200">Contact</Link></li>
+                                            {menu}
+                                        </ul>
+                                    </SheetContent>
+                                </Sheet>
+                            </div>
                         </div>
-                    </div>
-                </nav>
-                {mobileMenu &&
-                    (<div className="navMenus top-0 left-0 absolute block h-screen w-screen bg-[#F5F5F5] text-2xl">
-                        <i onClick={closeMenu} className='bx bx-x ml-4 absolute top-4 right-6 text-4xl'></i>
-                        <ul className='block font-medium gap-5 ml-4 mt-16'>
-                            <li onClick={closeMenu} className='mb-6'><Link href="/" className="border-b border-gray-200 ">Home</Link></li>
-                            <li onClick={closeMenu} className='mb-6'><Link href="./featured" className="border-b border-gray-200">Explore</Link></li>
-                            <li onClick={closeMenu} className='mb-6'><Link href="./mens" className="border-b border-gray-200">Add to Cart</Link></li>
-                            <li onClick={closeMenu} className='mb-6'><Link href="./signin" className="border-b border-gray-200">Sign In</Link></li>
-                            <li onClick={closeMenu} className='mb-6'><Link href="./member" className="border-b border-gray-200 ">Join us</Link></li>
-                            <li onClick={closeMenu} className='mb-6'><Link href="./payments" className="border-b border-gray-200">Contact</Link></li>
-                            <li onClick={closeMenu} className='mb-6'><Link href="./checkout" className="border-b border-gray-200">Checkout</Link></li>
-                        </ul>
-                    </div>)
-                }
+                    </nav>
+                </div>
             </div>
-        </div>
+            <div className="sm:hidden flex items-center justify-center px-5 my-3">
+                <Search />
+            </div>
+        </>
     )
 }
 
